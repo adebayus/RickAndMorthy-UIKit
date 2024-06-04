@@ -13,16 +13,19 @@ class RMCharacterViewController: UIViewController {
         super.viewDidLoad()
         title = "Characters"
         
-        let request = RMRequest(
-            endpoint: .character,
-            queryParamaters: [
-                URLQueryItem(name: "name", value: "rick")
-            ]
-        )
-        // Do any additional setup after loading the view.
+        RMService.shared.execute(.listCharactersRequest, expecting: RMGetAllCharactersResponse.self, completion: { result in
+            
+            switch result {
+            case .success(let model):
+                print(String(describing: model))
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        })
     }
     
-
+    
     /*
     // MARK: - Navigation
 
